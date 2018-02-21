@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -20,10 +21,9 @@ namespace Middlar.Services
         {
             try
             {
-                var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(requestPayload);
 
-                var content = new FormUrlEncodedContent(values);
-
+                var content = new StringContent(requestPayload, Encoding.UTF8, "application/json");
+                           
                 var response = await Client.PostAsync(requestUrl, content);
 
                 return await response.Content.ReadAsStringAsync();
